@@ -1,6 +1,6 @@
 <template>
   <nav>
-    <div class="logo"> <img src="./assets/caraNoBackground.png" alt=""></div>
+    <div class="logo"><div><h1>Rodrigo Miranda</h1></div><div><img src="./assets/caraNoBackground.png" alt=""></div><div><h1>e-portfolio</h1></div></div>
     <div class="routerOptions">
       <router-link to="/">Home</router-link> 
       <router-link to="/about">About</router-link>
@@ -16,38 +16,71 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
 }
+
 .logo{
-  background-color: #000;
+
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+animation: logoAnimation 2s both infinite;
 }
 .routerOptions{
   display: flex;
   align-items: center;
 }
 .routerOptions a{
-margin: 10%;
+margin: 1%;
+color: #f00;
+text-decoration: overline;
 }
 img{
   height: 25vh;
   width: 25vh;
+  
 }
 nav {
-  padding: 30px;
   display: flex;
-  background-color: aqua;
+  background-color: #000;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-}
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
+  min-height: min-content;
 
 }
-
+.logo div{
+  background-color: transparent;
+  width: 33.3%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Sedgwick Ave Display', cursive;
+  font-size: xx-large;
+  min-height: min-content;
+}
+.logo h1{
+  color: #fff;
+}
+.routerOptions{
+  width: 100%;
+  height: 6vh;
+  display: flex;
+  justify-content: center;
+  font-family: 'Sedgwick Ave Display', cursive;
+  font-size: xx-large;
+}
 nav a.router-link-exact-active {
-  color: #42b983;
+  color: #fff;
+  filter: drop-shadow(0px 0px 20px #f00); 
+}
+@keyframes logoAnimation {
+  0%{
+    filter: drop-shadow(0px 0px 0px #000); 
+  }50%{
+    filter: drop-shadow(0px 0px 20px #f00); 
+  }100%{
+    filter: drop-shadow(0px 0px 0px #000); 
+  }
 }
 </style>
