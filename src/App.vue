@@ -8,6 +8,7 @@
 
   </nav>
   <router-view/>
+  
 </template>
 
 <style scoped>
@@ -33,7 +34,7 @@ animation: logoAnimation 2s both infinite;
 .routerOptions a{
 margin: 1%;
 color: #f00;
-text-decoration: overline;
+text-decoration: none;
 }
 img{
   height: 25vh;
@@ -73,6 +74,7 @@ nav {
 nav a.router-link-exact-active {
   color: #fff;
   filter: drop-shadow(0px 0px 20px #f00); 
+  text-decoration: overline;
 }
 @keyframes logoAnimation {
   0%{

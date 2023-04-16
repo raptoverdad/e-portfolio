@@ -1,9 +1,26 @@
 <template>
   <div class="home">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  
     <div class="chatBox">
 
     </div>
+    <section>
+       <div class="project">
+        <h1>project 1</h1>
+        <img class="project1" src="../assets/1.jpg" alt="">
+        <p>I developed my first project entirely in JavaScript, with the aim of supporting the Raptoreum community and contributing to the wider crypto ecosystem. it's such an interesting game!. </p>
+
+       </div>
+       <div class="project">
+        <h1>project 2</h1>
+        <img src="../assets/phonefinder.png" alt="">
+        <p>Telegram bot with typescript and vue. if you lost your phone, just talk to the phoneFinder bot from anywhere you are and he won't stop sending you messages until you found your phone. try it. it's free!.</p>
+       </div>
+       <div class="project">
+        <h1>project 3</h1>
+       </div>
+    </section>
+
     <div class="footer" v-on:click="toggleChat()">
       <div class="animation">
         <img class="arrow" src="../assets/flecha1png.png" alt="">
@@ -36,12 +53,15 @@ export default {
     toggleChat() {
       this.chatStatus = this.chatStatus === "open chat" ? "close chat" : "open chat";  
       if(this.chatStatus=="open chat"){
-        document.querySelector('.arrow')
+       
         const arrows = document.querySelectorAll('.arrow');
         arrows.forEach(arrow => arrow.classList.remove('rotated'));
+        document.querySelector('.chatBox').style.left="-1000000px"
       }else{
+        document.querySelector('.chatBox').style.left="0px"
         const arrows = document.querySelectorAll('.arrow');
         arrows.forEach(arrow => arrow.classList.add('rotated'))
+    
       }
        
        
@@ -60,11 +80,17 @@ margin: 0;
   height:100vh;
   position: absolute;
   bottom: 0;
-  left: -1000000px;
+  left: -100000px;
 }
 .rotated {
   transform: rotate(180deg);
 }
+.project img{
+  height: 40vh;
+  width: 40vh;
+  margin: 6%;
+}
+
 .footer {
   position: fixed; /* fija la posición del elemento */
   left: 0; /* fija la posición izquierda del elemento a 0 */
@@ -74,9 +100,11 @@ margin: 0;
   color: #fff; /* establece el color de texto */
   padding: 10px; /* añade un relleno para separar el contenido del borde */
   text-align: center; /* alinea el contenido al centro */
+  height: 13vh;
+    animation: logoAnimation 2s both infinite;
 }
 .footer:hover{
-  animation: logoAnimation 2s both infinite;
+
 transition: 1s;
 }
 .home{
@@ -88,8 +116,34 @@ transition: 1s;
   color: #fff;
   font-family: 'Sedgwick Ave Display', cursive;
 }
+.project{
+  padding-top: 5%;
+display:flex;
+flex-direction: column;
+justify-content: flex-start;
+align-items: center;
+color: #f00;
+text-align: center;
+font-size: x-large;
+  font-family: 'Sedgwick Ave Display', cursive;
+}
+.project1{
+  height: 40vh;
+   min-width: 55vh;
+}
 .arrow{
   height: 5vh;
+}
+section{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 5px; /*The space between grid containers*/
+  grid-auto-rows:minmax(100vh,min-content);
+  animation: background 3s infinite;
+  background-color: #fff;
+  max-width: 100vw;
+ overflow-x: hidden;
+ border:solid 5px #000;
 }
 @keyframes logoAnimation {
   0%{
@@ -100,5 +154,6 @@ transition: 1s;
     filter: drop-shadow(0px 0px 0px #000); 
   }
 }
+
 
 </style>
