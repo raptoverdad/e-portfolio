@@ -57,24 +57,37 @@ export default {
   },data(){
     return{
       chatStatus:"open chat",
-      id:null
+      id:null,
+      bossAvailable:null
     }
 
 },created(){
   socket.on('connect',()=>{
   console.log("socket connected")
   console.log("id: ", socket.id)
-  this.id=socket.id
+  localStorage.setItem("id",socket.id)
+ this.id=socket.id
 })
-},mounted(){
 
+},mounted(){
+  socket.emit("isAvailableOrNot",this.id)
+  socket.on("isAvailableOrNotResponse",(data)=>{
+    if(data=="yes"){
+
+    }else{
+      
+    }
+  })
 socket.on('bossMessage',(datos)=>{
-let message=datos
-alert(message)
+  let message=datos
+  alert(message)
+})
+socket.on("bossNotAvailable",()=>{
+
 })
 },
 destroyed(){
-  socket.emit('delete')
+  localStorage.removeItem("id")
 }
 ,
   methods:{
