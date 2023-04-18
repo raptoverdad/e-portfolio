@@ -37,6 +37,18 @@
 <script>
 // @ is an alias to /src
 import HelloWorld from '@/components/HelloWorld.vue'
+import { io } from 'socket.io-client';
+
+const socket = io('http://localhost:3000/', {
+  withCredentials: false,
+  extraHeaders: {
+    "Access-Control-Allow-Origin": null
+  },
+  query: {
+    key: 'google'
+  }
+});
+
 
 export default {
   name: 'HomeView',
@@ -44,13 +56,30 @@ export default {
     HelloWorld
   },data(){
     return{
-      chatStatus:"open chat"
+      chatStatus:"open chat",
+      id:null
     }
 
+},created(){
+  socket.on('connect',()=>{
+  console.log("socket connected")
+  console.log("id: ", socket.id)
+  this.id=socket.id
+})
+},mounted(){
+
+socket.on('bossMessage',(datos)=>{
+let message=datos
+alert(message)
+})
+},
+destroyed(){
+  socket.emit('delete')
 }
 ,
   methods:{
     toggleChat() {
+
       this.chatStatus = this.chatStatus === "open chat" ? "close chat" : "open chat";  
       if(this.chatStatus=="open chat"){
        
@@ -61,6 +90,8 @@ export default {
         document.querySelector('.chatBox').style.left="0px"
         const arrows = document.querySelectorAll('.arrow');
         arrows.forEach(arrow => arrow.classList.add('rotated'))
+
+        socket.emit('message',JSON.stringify({id:this.id,message:"hola"}))
     
       }
        
