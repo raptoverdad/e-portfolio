@@ -85,4 +85,15 @@ nav a.router-link-exact-active {
     filter: drop-shadow(0px 0px 0px #000); 
   }
 }
+@media (max-width: 1200px) {
+  .logo{
+    flex-direction: column;
+    text-align: center;
+  }
+  .logo h1{
+    
+  color: #fff;
+  font-size: x-large;
+}
+}
 </style>

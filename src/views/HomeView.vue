@@ -5,7 +5,14 @@
       <h1>"Rodrigo is currently chatting with someone else. Please come back later</h1>
     </div>
     <div v-if="bossAvailable" class="chatBox">
-      <div class="chatBoxInTheChatBox"></div>
+      <div class="chatBoxInTheChatBox">
+        <div class="chatMessage" v-for="item in messages"><h1 class="chatUser">{{item.user + ':'}}</h1> <p class="chatUserMessage">{{item.mensaje}}</p></div>
+      </div>
+            <div class="chatOptions">
+              <input class="messageInput" v-model="inputMessage" type="text">
+              <input type="button" v-on:click="sendMessage" class="sendButton" value="send">
+            </div>
+
     </div>
     <section v-if="menuStatus">
        <div class="project">
@@ -63,7 +70,8 @@ export default {
       id:null,
       bossAvailable:true,
       menuStatus:true,
-      messages:[{usuario:"rodrigo",mensaje:"hola a todos!"},{usuario:"rodrigo",mensaje:"tu puedes con todo"}]
+      messages:[],
+      inputMessage:""
     }
 
 },created(){
@@ -85,7 +93,7 @@ export default {
   })
 socket.on('bossMessage',(datos)=>{
   let message=datos
-  alert(message)
+  this.messages.push({user:"Rodrigo",message})
 })
 socket.on("bossNotAvailable",()=>{
 
@@ -119,11 +127,21 @@ destroyed(){
         }else{
           document.querySelector('.chatBox').style.left="0px"
         }
-        socket.emit('message',JSON.stringify({id:this.id,message:"hola"}))
+        
     
       }
        
        
+         },
+         async sendMessage(){
+         if(this.inputMessage==""){
+          alert("You cannot leave the message field blank")
+         }else{
+          await socket.emit('message',JSON.stringify({id:this.id,message:this.inputMessage}))
+          this.messages.push({user:"you",mensaje:this.inputMessage})
+         }
+
+          
          }
   }
 }
@@ -136,7 +154,7 @@ margin: 0;
 .chatBox{
   background-color: black;
   width: 100%;
-  height:100vh;
+  height:87vh;
   position: absolute;
   bottom: 0;
   left: -100000px;
@@ -144,14 +162,36 @@ margin: 0;
   align-items: center;
   justify-content: center;
   background-image: url('../assets/fondo-eléctrico-rojo-94460499.jpg');
+  flex-direction: column;
+  margin-bottom:13vh;
+}
+.chatMessage{
+  display: flex;
+  align-items: center;
+  background-color: aquamarine;
+  max-width: 100%;
+  word-wrap:break-word;
+}
+.chatUserMessage{
+  color: #fff;
+  font-size: x-large;
+  margin: 0;
+  word-wrap:break-word;
+  background-color: aqua;
+  max-width: 70%;
+  font-family: 'Ubuntu', sans-serif;
 }
 .chatBoxInTheChatBox{
 width: 80%;
 height: 90%;
 background-color: #333;
 overflow: scroll;
+padding-bottom: 5%;
 }
-
+.chatUser{
+  color: #fff;
+  font-family: 'Sedgwick Ave Display', cursive;
+}
 .chatBoxNotAvailable{
   background-color: black;
   width: 100%;
@@ -240,5 +280,22 @@ section{
   }
 }
 
-
+@media (max-width: 1200px) {
+  section{
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-gap: 5px; /*The space between grid containers*/
+  grid-auto-rows:repeat(3,minmax(100vh,min-content));
+  animation: background 3s infinite;
+  background-color: #fff;
+  max-width: 100vw;
+ overflow-x: hidden;
+ border:solid 5px #000;
+}
+.home{
+  max-width: 100vw;
+  max-height: min-content;
+  overflow: hidden;
+}
+}
 </style>
