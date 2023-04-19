@@ -1,10 +1,13 @@
 <template>
   <div class="home">
   
-    <div class="chatBox">
-
+    <div v-if="!bossAvailable" class="chatBoxNotAvailable">
+      <h1>"Rodrigo is currently chatting with someone else. Please come back later</h1>
     </div>
-    <section>
+    <div v-if="bossAvailable" class="chatBox">
+      <div class="chatBoxInTheChatBox"></div>
+    </div>
+    <section v-if="menuStatus">
        <div class="project">
         <h1>project 1</h1>
         <img class="project1" src="../assets/1.jpg" alt="">
@@ -58,7 +61,9 @@ export default {
     return{
       chatStatus:"open chat",
       id:null,
-      bossAvailable:null
+      bossAvailable:true,
+      menuStatus:true,
+      messages:[{usuario:"rodrigo",mensaje:"hola a todos!"},{usuario:"rodrigo",mensaje:"tu puedes con todo"}]
     }
 
 },created(){
@@ -73,9 +78,9 @@ export default {
   socket.emit("isAvailableOrNot",this.id)
   socket.on("isAvailableOrNotResponse",(data)=>{
     if(data=="yes"){
-
+    this.bossAvailable=true
     }else{
-      
+      this.bossAvailable=false
     }
   })
 socket.on('bossMessage',(datos)=>{
@@ -95,15 +100,25 @@ destroyed(){
 
       this.chatStatus = this.chatStatus === "open chat" ? "close chat" : "open chat";  
       if(this.chatStatus=="open chat"){
-       
+       this.menuStatus=true
         const arrows = document.querySelectorAll('.arrow');
         arrows.forEach(arrow => arrow.classList.remove('rotated'));
-        document.querySelector('.chatBox').style.left="-1000000px"
+        if(!this.bossAvailable){
+          document.querySelector('.chatBoxNotAvailable').style.left="-1000000px"
+        }else{
+          document.querySelector('.chatBox').style.left="-1000000px"
+        }
+       
+      
       }else{
-        document.querySelector('.chatBox').style.left="0px"
+        this.menuStatus=false
         const arrows = document.querySelectorAll('.arrow');
         arrows.forEach(arrow => arrow.classList.add('rotated'))
-
+        if(!this.bossAvailable){
+          document.querySelector('.chatBoxNotAvailable').style.left="0px"
+        }else{
+          document.querySelector('.chatBox').style.left="0px"
+        }
         socket.emit('message',JSON.stringify({id:this.id,message:"hola"}))
     
       }
@@ -125,6 +140,32 @@ margin: 0;
   position: absolute;
   bottom: 0;
   left: -100000px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url('../assets/fondo-eléctrico-rojo-94460499.jpg');
+}
+.chatBoxInTheChatBox{
+width: 80%;
+height: 90%;
+background-color: #333;
+overflow: scroll;
+}
+
+.chatBoxNotAvailable{
+  background-color: black;
+  width: 100%;
+  height:100vh;
+  position: absolute;
+  bottom: 0;
+  left: -100000px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.chatBoxNotAvailable h1{
+  color: #fff;
 }
 .rotated {
   transform: rotate(180deg);
