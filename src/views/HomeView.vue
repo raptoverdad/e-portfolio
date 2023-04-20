@@ -1,16 +1,15 @@
 <template>
   <div class="home">
-  
-    <div v-if="!bossAvailable" class="chatBoxNotAvailable">
-      <h1>"Rodrigo is currently chatting with someone else. Please come back later</h1>
-    </div>
-    <div v-if="bossAvailable" class="chatBox">
+
+    <div class="chatBox">
       <div class="chatBoxInTheChatBox">
+        <h1>{{ this.id }}</h1>
         <div class="chatMessage" v-for="item in messages"><h1 class="chatUser">{{item.user + ':'}}</h1> <p class="chatUserMessage">{{item.mensaje}}</p></div>
       </div>
             <div class="chatOptions">
               <input class="messageInput" v-model="inputMessage" type="text">
-              <input type="button" v-on:click="sendMessage" class="sendButton" value="send">
+              <input type="button" v-if="bossAvailable" v-on:click="sendMessage" class="sendButton" value="send">
+              <input type="button" v-if="!bossAvailable" disabled class="sendButton" value="send">
             </div>
 
     </div>
@@ -80,26 +79,29 @@ export default {
   console.log("id: ", socket.id)
   localStorage.setItem("id",socket.id)
  this.id=socket.id
+ socket.emit("isAvailableOrNot",this.id)
 })
 
 },mounted(){
-  socket.emit("isAvailableOrNot",this.id)
+ 
   socket.on("isAvailableOrNotResponse",(data)=>{
     if(data=="yes"){
     this.bossAvailable=true
+
     }else{
       this.bossAvailable=false
+
     }
   })
 socket.on('bossMessage',(datos)=>{
   let message=datos
-  this.messages.push({user:"Rodrigo",message})
+  this.messages.push({user:"Rodrigo",message:message})
 })
-socket.on("bossNotAvailable",()=>{
 
-})
 },
-destroyed(){
+async destroyed(){
+  await socket.emit("socketoff",this.id)
+  alert("have a nice one!")
   localStorage.removeItem("id")
 }
 ,
@@ -111,26 +113,22 @@ destroyed(){
        this.menuStatus=true
         const arrows = document.querySelectorAll('.arrow');
         arrows.forEach(arrow => arrow.classList.remove('rotated'));
-        if(!this.bossAvailable){
-          document.querySelector('.chatBoxNotAvailable').style.left="-1000000px"
-        }else{
+       
           document.querySelector('.chatBox').style.left="-1000000px"
-        }
+      
        
       
       }else{
         this.menuStatus=false
         const arrows = document.querySelectorAll('.arrow');
         arrows.forEach(arrow => arrow.classList.add('rotated'))
-        if(!this.bossAvailable){
-          document.querySelector('.chatBoxNotAvailable').style.left="0px"
-        }else{
-          document.querySelector('.chatBox').style.left="0px"
-        }
+        socket.emit("isAvailableOrNot",this.id)
+     
+        document.querySelector('.chatBox').style.left="0px"
+       
         
     
       }
-       
        
          },
          async sendMessage(){
