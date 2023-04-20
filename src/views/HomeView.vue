@@ -4,7 +4,7 @@
     <div class="chatBox">
       <div class="chatBoxInTheChatBox">
         <h1>{{ this.id }}</h1>
-        <div class="chatMessage" v-for="item in messages"><h1 class="chatUser">{{item.user + ':'}}</h1> <p class="chatUserMessage">{{item.mensaje}}</p></div>
+        <div class="chatMessage" v-for="item in messages"><h1 class="chatUser">{{item.user + ': '}}</h1><p class="chatUserMessage">{{item.mensaje}}</p></div>
       </div>
             <div class="chatOptions">
               <input class="messageInput" v-model="inputMessage" type="text">
@@ -147,11 +147,12 @@ async destroyed(){
 <style scoped>
 *{
   box-sizing: border-box;
-margin: 0;
+  margin: 0;
+padding: 0;
 }
 .chatBox{
   background-color: black;
-  width: 100%;
+  width: 100vw;
   height:87vh;
   position: absolute;
   bottom: 0;
@@ -163,12 +164,18 @@ margin: 0;
   flex-direction: column;
   margin-bottom:13vh;
 }
+.chatOptions{
+  background-color: #ff0;
+  display: flex;
+  flex-direction: row;
+}
 .chatMessage{
   display: flex;
   align-items: center;
   background-color: aquamarine;
   max-width: 100%;
   word-wrap:break-word;
+  padding: 1%;
 }
 .chatUserMessage{
   color: #fff;
@@ -190,21 +197,6 @@ padding-bottom: 5%;
   color: #fff;
   font-family: 'Sedgwick Ave Display', cursive;
 }
-.chatBoxNotAvailable{
-  background-color: black;
-  width: 100%;
-  height:100vh;
-  position: absolute;
-  bottom: 0;
-  left: -100000px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-}
-.chatBoxNotAvailable h1{
-  color: #fff;
-}
 .rotated {
   transform: rotate(180deg);
 }
@@ -218,13 +210,14 @@ padding-bottom: 5%;
   position: fixed; /* fija la posición del elemento */
   left: 0; /* fija la posición izquierda del elemento a 0 */
   bottom: 0; /* fija la posición inferior del elemento a 0 */
-  width: 100%; /* fija el ancho del elemento al 100% del ancho de la pantalla */
+  max-width:100vw ;
   background-color: #000; /* establece un color de fondo */
   color: #fff; /* establece el color de texto */
-  padding: 10px; /* añade un relleno para separar el contenido del borde */
+  padding: 6px; /* añade un relleno para separar el contenido del borde */
   text-align: center; /* alinea el contenido al centro */
   height: 13vh;
-    animation: logoAnimation 2s both infinite;
+  animation: logoAnimation 2s both infinite;
+  min-width: 100vw;
 }
 .footer:hover{
 
@@ -234,6 +227,9 @@ transition: 1s;
   max-width: 100vw;
   max-height: 100vh;
   overflow: hidden;
+  margin: 0;
+  padding: 0;
+  left: 0;
 }
 .chatStatus{
   color: #fff;
@@ -241,14 +237,16 @@ transition: 1s;
 }
 .project{
   padding-top: 5%;
-display:flex;
-flex-direction: column;
-justify-content: flex-start;
-align-items: center;
-color: #f00;
-text-align: center;
-font-size: x-large;
+  display:flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  color: #f00;
+  text-align: center;
+  font-size: x-large;
   font-family: 'Sedgwick Ave Display', cursive;
+  width: 100%;
+background-color: #ff0;
 }
 .project1{
   height: 40vh;
@@ -260,13 +258,42 @@ font-size: x-large;
 section{
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-gap: 5px; /*The space between grid containers*/
+  grid-gap: 0px; /*The space between grid containers*/
   grid-auto-rows:minmax(100vh,min-content);
   animation: background 3s infinite;
   background-color: #fff;
-  max-width: 100vw;
+  width: 100%;
  overflow-x: hidden;
  border:solid 5px #000;
+}
+/* boton y caja de texto */
+.sendButton{
+  background-color: rgb(255, 0, 0);
+  color: rgb(0, 0, 0);
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.messageInput {
+  border: 2px solid gray;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 16px;
+  width: 300px;
+}
+
+/* Cambio de estilo cuando el botón está en estado "hover" */
+.sendButton:hover {
+  background-color: lightblue;
+  cursor: pointer;
+}
+
+/* Cambio de estilo cuando la caja de texto está enfocada */
+.messageInput:focus {
+  border: 2px solid blue;
+  outline: none;
 }
 @keyframes logoAnimation {
   0%{
@@ -282,18 +309,40 @@ section{
   section{
   display: grid;
   grid-template-columns: repeat(1, 1fr);
-  grid-gap: 5px; /*The space between grid containers*/
   grid-auto-rows:repeat(3,minmax(100vh,min-content));
   animation: background 3s infinite;
   background-color: #fff;
-  max-width: 100vw;
+  max-width: 100%;
  overflow-x: hidden;
  border:solid 5px #000;
 }
 .home{
-  max-width: 100vw;
+  width: 100%;
   max-height: min-content;
   overflow: hidden;
+}
+.project img{
+  height: 30vh;
+  width: 30vh;
+  margin: 4%;
+}
+section{
+  width: 100%;
+}
+.project1{
+  height: 40%;
+   min-width: 80%;
+}
+.project p{
+  font-size: 3vh;
+  padding: 10%;
+}
+.chatOptions{
+  display: flex;
+  flex-direction: column;
+}
+.chatMessage{
+  padding: 4%;
 }
 }
 </style>

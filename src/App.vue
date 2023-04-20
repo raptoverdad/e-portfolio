@@ -12,24 +12,30 @@
 </template>
 
 <style scoped>
+*{
+  box-sizing: border-box;
+  margin: 0;
+padding: 0;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
+
 }
 
 .logo{
-
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-animation: logoAnimation 2s both infinite;
+  animation: logoAnimation 2s both infinite;
 }
 .routerOptions{
   display: flex;
   align-items: center;
+  width: 100%;
 }
 .routerOptions a{
 margin: 1%;
@@ -48,7 +54,8 @@ nav {
   align-items: center;
   justify-content: center;
   min-height: min-content;
-
+  max-width: 100vw;
+  overflow: hidden;
 }
 .logo div{
   background-color: transparent;
@@ -95,5 +102,6 @@ nav a.router-link-exact-active {
   color: #fff;
   font-size: x-large;
 }
+
 }
 </style>
