@@ -69,6 +69,7 @@ nav {
 }
 .logo h1{
   color: #fff;
+  font-size: 8vh;
 }
 .routerOptions{
   width: 100%;

@@ -160,19 +160,17 @@ padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: url('../assets/fondo-eléctrico-rojo-94460499.jpg');
+  background-image: url('../assets/background.png');
   flex-direction: column;
   margin-bottom:13vh;
 }
 .chatOptions{
-  background-color: #ff0;
   display: flex;
   flex-direction: row;
 }
 .chatMessage{
   display: flex;
   align-items: center;
-  background-color: aquamarine;
   max-width: 100%;
   word-wrap:break-word;
   padding: 1%;
@@ -182,9 +180,9 @@ padding: 0;
   font-size: x-large;
   margin: 0;
   word-wrap:break-word;
-  background-color: aqua;
   max-width: 70%;
   font-family: 'Ubuntu', sans-serif;
+  padding-left:2%;
 }
 .chatBoxInTheChatBox{
 width: 80%;
@@ -192,6 +190,7 @@ height: 90%;
 background-color: #333;
 overflow: scroll;
 padding-bottom: 5%;
+border: 5px solid red;
 }
 .chatUser{
   color: #fff;
@@ -223,6 +222,10 @@ padding-bottom: 5%;
 
 transition: 1s;
 }
+.chatOptions input{
+  font-family: 'Ubuntu', sans-serif;
+  font-size: xx-large;
+}
 .home{
   max-width: 100vw;
   max-height: 100vh;
@@ -244,9 +247,8 @@ transition: 1s;
   color: #f00;
   text-align: center;
   font-size: x-large;
-  font-family: 'Sedgwick Ave Display', cursive;
+  font-family: 'Ubuntu', sans-serif;
   width: 100%;
-background-color: #ff0;
 }
 .project1{
   height: 40vh;
@@ -264,7 +266,6 @@ section{
   background-color: #fff;
   width: 100%;
  overflow-x: hidden;
- border:solid 5px #000;
 }
 /* boton y caja de texto */
 .sendButton{
@@ -282,6 +283,9 @@ section{
   padding: 10px;
   font-size: 16px;
   width: 300px;
+}
+p{
+  color: #000;
 }
 
 /* Cambio de estilo cuando el botón está en estado "hover" */
@@ -344,5 +348,79 @@ section{
 .chatMessage{
   padding: 4%;
 }
+.chatBoxInTheChatBox{
+width: 90%;
+height: 70%;
+background-color: #333;
+overflow: scroll;
+padding-bottom: 5%;
 }
+}
+
+@media (max-width: 800px) {
+  section{
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-auto-rows:repeat(3,minmax(100vh,min-content));
+  animation: background 3s infinite;
+  background-color: #fff;
+  max-width: 100%;
+ overflow-x: hidden;
+ border:solid 5px #000;
+}
+.home{
+  width: 100%;
+  max-height: min-content;
+  overflow: hidden;
+}
+.project img{
+  height: 30vh;
+  width: 30vh;
+  margin: 4%;
+}
+section{
+  width: 100%;
+}
+.project1{
+  height: 40%;
+   min-width: 80%;
+}
+.project p{
+  font-size: 3vh;
+  padding: 10%;
+}
+.chatOptions{
+  display: flex;
+  flex-direction: column;
+}
+.chatMessage{
+  padding: 4%;
+}
+.chatBoxInTheChatBox{
+width: 100%;
+height: 50%;
+background-color: #333;
+overflow: scroll;
+margin: 0%;
+}
+.chatBox{
+  background-color: black;
+  width: 100vw;
+  height:100vh;
+  position: absolute;
+  bottom: 0;
+  left: -100000px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url('../assets/background.png');
+  flex-direction: column;
+  margin-bottom:-13vh;
+  padding-bottom: 10%;
+}
+.chatOptions input{
+  width: 97vw;
+}
+}
+
 </style>
